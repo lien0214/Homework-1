@@ -45,7 +45,6 @@ contract D31eg4t3Test is Test {
     function test_check_exploit() public {
         vm.prank(hacker, hacker);
         attack.exploit();
-
         bool result = delegate.result(hacker);
         assertTrue(result);
 
