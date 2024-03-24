@@ -5,11 +5,7 @@ contract StudentV1 {
     uint256 private registerCallCount = 0;
     function register() external returns (uint256) {
         registerCallCount++;
-        if (registerCallCount % 2 == 1) {
-            return 1001;
-        } else {
-            return 123;
-        }
+        return (registerCallCount % 2 == 0) ? 123 : 1001;
     }
 }
 
@@ -20,24 +16,14 @@ interface IClassroomV2 {
 contract StudentV2 {
     function register() external view returns (uint256) {
         IClassroomV2 class = IClassroomV2(msg.sender);
-        if (class.isEnrolled()) {
-            return 123;
-        }
-        else {
-            return 1001;
-        }
+        return class.isEnrolled() ? 123 : 1001;
     }
 }
 
 /* Problem 3 Interface & Contract */
 contract StudentV3 {
     function register() external view returns (uint256) {
-        uint256 balance = gasleft();
-        if (balance > 6635) {
-            return balance;
-        }
-        else
-            return 123;
+        return gasleft() <= 6635 ? 123 : gasleft();
     }
 }
 

@@ -47,10 +47,10 @@ contract NFinTech is IERC721 {
             uint256 id = _tokenId;
             _owner[id] = msg.sender;
 
-            _balances[msg.sender] += 1;
+            _balances[msg.sender]++;
             isClaim[msg.sender] = true;
 
-            _tokenId += 1;
+            _tokenId++;
         }
     }
 
@@ -104,21 +104,15 @@ contract NFinTech is IERC721 {
 		// The caller must be allowed to transfer this token
 		require(_isApprovedOrOwner(msg.sender, tokenId), "NFinTech: transfer caller is not owner nor approved");
 
-		// Addresses must be valid
 		require(from != address(0), "NFinTech: transfer from the zero address");
 		require(to != address(0), "NFinTech: transfer to the zero address");
 
-		// Clear approvals from the previous owner
 		_approve(address(0), tokenId);
 
-		// Update balances
 		_balances[from] -= 1;
 		_balances[to] += 1;
 
-		// Transfer ownership
 		_owner[tokenId] = to;
-
-		// Emit the transfer event
 		emit Transfer(from, to, tokenId);
 	}
 
@@ -137,7 +131,6 @@ contract NFinTech is IERC721 {
 		return (spender == owner || getApproved(tokenId) == spender || isApprovedForAll(owner, spender));
 	}
 
-	// Make sure to implement the _approve function if not already done
 	function _approve(address to, uint256 tokenId) private {
 		_tokenApproval[tokenId] = to;
 		emit Approval(ownerOf(tokenId), to, tokenId);
@@ -147,7 +140,6 @@ contract NFinTech is IERC721 {
 		require(ownerOf(tokenId) == from, "ERC721: transfer of token that is not own");
 		require(to != address(0), "ERC721: transfer to the zero address");
 
-		// Clear approvals
 		_approve(address(0), tokenId);
 
 		_balances[from] -= 1;
@@ -177,7 +169,7 @@ contract NFinTech is IERC721 {
 				}
 			}
 		} else {
-			return true; // If `to` is not a contract, no need to check
+			return true;
 		}
 	}
 
